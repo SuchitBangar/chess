@@ -14,7 +14,11 @@ public class ChessGame extends JFrame implements ActionListener {
   private int startX = -1, startY = -1; // For selecting piece to move
   private Font fontAwesome;
 
-  public ChessGame() {
+  public ChessGame(boolean isLoggedIn) {
+    if (!isLoggedIn) {
+      JOptionPane.showMessageDialog(null, "You need to be logged in to play!");
+      System.exit(0);
+    }
     loadFontAwesome();
 
     setTitle("Chess Game");
@@ -99,6 +103,6 @@ public class ChessGame extends JFrame implements ActionListener {
   }
 
   public static void main(String[] args) {
-    SwingUtilities.invokeLater(ChessGame::new);
+    new ChessGame(false);
   }
 }

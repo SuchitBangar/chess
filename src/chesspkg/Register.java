@@ -7,13 +7,13 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.sql.*;
 
-public class Login extends JFrame implements ActionListener {
+public class Register extends JFrame implements ActionListener {
 
   JTextField tUsername;
   JPasswordField tPassword;
   JButton login, register, exit;
 
-  Login() {
+  Register() {
 
     JLabel username = new JLabel("Username");
     username.setBounds(350, 100, 100, 20);
@@ -31,12 +31,12 @@ public class Login extends JFrame implements ActionListener {
     tPassword.setBounds(450, 150, 100, 20);
     add(tPassword);
 
-    login = new JButton("Login");
-    login.setBounds(400, 200, 90, 20);
-    login.setBackground(Color.black);
-    login.setForeground(Color.white);
-    login.addActionListener(this);
-    add(login);
+    register = new JButton("Register");
+    register.setBounds(400, 200, 90, 20);
+    register.setBackground(Color.black);
+    register.setForeground(Color.white);
+    register.addActionListener(this);
+    add(register);
 
     exit = new JButton("Exit");
     exit.setBounds(400, 230, 90, 20);
@@ -52,7 +52,7 @@ public class Login extends JFrame implements ActionListener {
     img.setBounds(0, 100, 300, 300);
     add(img);
 
-    setTitle("Login");
+    setTitle("Register");
     setSize(600, 450);
     setLayout(null);
     setLocation(450, 200);
@@ -62,32 +62,40 @@ public class Login extends JFrame implements ActionListener {
 
   @Override
   public void actionPerformed(ActionEvent e) {
-    if (e.getSource() == login) {
+    if (e.getSource() == register) {
       try {
         String username = tUsername.getText();
         String password = tPassword.getText();
 
         Conn conn = new Conn();
 
-        String query = "select * from login where username = '" + username + "' and password = '" + password + "'";
-        ResultSet resSet = conn.stmt.executeQuery(query);
+        String checkQuery = "SELECT * FROM login WHERE username = '" + username + "'";
+        ResultSet resSet = conn.stmt.executeQuery(checkQuery);
+
         if (resSet.next()) {
-          setVisible(false);
-          new ChessGame(true);
+          JOptionPane.showMessageDialog(null, "Username already exists. Please choose a different username.");
         } else {
-          JOptionPane.showMessageDialog(null, "invalid username or password");
+          String insertQuery = "INSERT INTO login (username, password) VALUES ('" + username + "', '" + password + "')";
+          int rowsAffected = conn.stmt.executeUpdate(insertQuery);
+
+          if (rowsAffected > 0) {
+            JOptionPane.showMessageDialog(null, "Registered successfully. Please login.");
+            setVisible(false);
+            new Login();
+          } else {
+            JOptionPane.showMessageDialog(null, "Registration failed. Please try again.");
+          }
         }
+
       } catch (Exception E) {
         E.printStackTrace();
       }
-    } else if (e.getSource() == register) {
-      System.out.println("register");
     } else if (e.getSource() == exit) {
       System.exit(0);
     }
   }
 
   public static void main(String[] args) {
-    new Login();
+    new Register();
   }
 }
