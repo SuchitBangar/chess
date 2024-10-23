@@ -16,40 +16,75 @@ public class Register extends JFrame implements ActionListener {
   Register() {
 
     JLabel username = new JLabel("Username");
-    username.setBounds(350, 100, 100, 20);
+    username.setBounds(50, 100, 100, 20);
     add(username);
 
     JLabel password = new JLabel("Password");
-    password.setBounds(350, 150, 100, 20);
+    password.setBounds(50, 130, 100, 20);
     add(password);
 
     tUsername = new JTextField();
-    tUsername.setBounds(450, 100, 100, 20);
+    tUsername.setBounds(150, 100, 100, 20);
     add(tUsername);
 
     tPassword = new JPasswordField();
-    tPassword.setBounds(450, 150, 100, 20);
+    tPassword.setBounds(150, 130, 100, 20);
     add(tPassword);
 
     register = new JButton("Register");
-    register.setBounds(400, 200, 90, 20);
+    register.setBounds(100, 170, 90, 20);
     register.setBackground(Color.black);
     register.setForeground(Color.white);
     register.addActionListener(this);
     add(register);
 
     exit = new JButton("Exit");
-    exit.setBounds(400, 230, 90, 20);
+    exit.setBounds(100, 200, 90, 20);
     exit.setBackground(Color.black);
     exit.setForeground(Color.white);
     exit.addActionListener(this);
     add(exit);
 
-    ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("icons/chess.png"));
+    JLabel loginText = new JLabel("Already a user?");
+    loginText.setBounds(80, 230, 90, 20);
+    add(loginText);
+
+    JLabel loginRedirect = new JLabel("Login");
+    loginRedirect.setForeground(Color.blue.darker());
+    loginRedirect.setBounds(170, 230, 90, 20);
+    loginRedirect.addMouseListener(new MouseListener() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        setVisible(false);
+        new Login();
+      }
+
+      @Override
+      public void mouseExited(MouseEvent e) {
+        loginRedirect.setText("Login");
+      }
+
+      @Override
+      public void mouseEntered(MouseEvent e) {
+        loginRedirect.setText("<html><a href=''>" + "Login" + "</a></html>");
+      }
+
+      public void mouseReleased(MouseEvent e) {
+
+      }
+
+      public void mousePressed(MouseEvent e) {
+
+      }
+
+    });
+    add(loginRedirect);
+
+    ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("icons/chess2.png"));
     Image i2 = i1.getImage().getScaledInstance(300, 300, Image.SCALE_DEFAULT);
     ImageIcon i3 = new ImageIcon(i2);
     JLabel img = new JLabel(i3);
-    img.setBounds(0, 100, 300, 300);
+    img.setBounds(300, 50, 300, 300);
     add(img);
 
     setTitle("Register");

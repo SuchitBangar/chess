@@ -45,6 +45,41 @@ public class Login extends JFrame implements ActionListener {
     exit.addActionListener(this);
     add(exit);
 
+    JLabel registerText = new JLabel("First time here?");
+    registerText.setBounds(370, 260, 90, 20);
+    add(registerText);
+
+    JLabel registerRedirect = new JLabel("Register");
+    registerRedirect.setForeground(Color.blue.darker());
+    registerRedirect.setBounds(460, 260, 90, 20);
+    registerRedirect.addMouseListener(new MouseListener() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        setVisible(false);
+        new Register();
+      }
+
+      @Override
+      public void mouseExited(MouseEvent e) {
+        registerRedirect.setText("Register");
+      }
+
+      @Override
+      public void mouseEntered(MouseEvent e) {
+        registerRedirect.setText("<html><a href=''>" + "Register" + "</a></html>");
+      }
+
+      public void mouseReleased(MouseEvent e) {
+
+      }
+
+      public void mousePressed(MouseEvent e) {
+
+      }
+
+    });
+    add(registerRedirect);
+
     ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("icons/chess.png"));
     Image i2 = i1.getImage().getScaledInstance(300, 300, Image.SCALE_DEFAULT);
     ImageIcon i3 = new ImageIcon(i2);
